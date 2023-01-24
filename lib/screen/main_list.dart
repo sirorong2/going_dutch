@@ -38,11 +38,13 @@ class _DutchItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('장소'),
+        Text('장소',),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
+            Container(
               child: Row(
                 children: [
                   Text('참석자수'),
@@ -50,9 +52,8 @@ class _DutchItem extends StatelessWidget {
                   Text('1'),
                 ],
               ),
-              flex: 1,
             ),
-            Expanded(
+            Container(
               child: Row(
                 children: [
                   Icon(
@@ -63,7 +64,6 @@ class _DutchItem extends StatelessWidget {
                   ),
                 ],
               ),
-              flex: 1,
             )
           ],
         ),
