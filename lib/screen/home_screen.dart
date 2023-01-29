@@ -1,22 +1,68 @@
 import 'package:flutter/material.dart';
-import 'package:going_dutch/screen/main_list.dart';
+import 'package:going_dutch/screen/dutch_page.dart';
+import 'package:going_dutch/screen/list_page.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Going Dutch'),
-        backgroundColor: Color(0xFF9966FF),
         leading: Icon(Icons.menu),
+        title: Text('Going Dtuch'),
         actions: [
-          Text('정산',textAlign: TextAlign.center,),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Icon(Icons.settings),
+          ),
         ],
       ),
-      body: BodyPage(),
 
+      body: Center(
+        child: Dutch_page(),
+      ),
+      //floatingActionButton: FloatingActionButton(onPressed: (){},child: Icon(Icons.add,)),
+      
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+              icon: Image.asset(
+                "assets/icons/money-transfer.png",
+                width: 30.0,
+                height: 30.0,
+              ),
+              label: 'Dutch'),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              "assets/icons/list.png",
+              width: 30.0,
+              height: 30.0,
+            ),
+            label: 'List',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _bottomNavigationBarTapped,
+      ),
     );
   }
+
+  void _bottomNavigationBarTapped(int index){
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+  
+  List _SelectedPage = [
+    Dutch_page(),
+    ListPage(),
+  ];
 }
