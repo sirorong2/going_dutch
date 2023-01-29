@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 
-class DutchList extends StatefulWidget {
-  const DutchList({Key? key}) : super(key: key);
-
-  @override
-  State<DutchList> createState() => _DutchListState();
-}
-
-class _DutchListState extends State<DutchList> {
+class DutchList extends StatelessWidget {
+  int attendance=2;
+  DutchList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +27,10 @@ class _DutchListState extends State<DutchList> {
       itemCount: itemMaxCount,
     );
   }
-
-
 }
 
 class _DutchItemCard extends StatefulWidget {
+
 
   const _DutchItemCard({Key? key,}) : super(key: key);
 
