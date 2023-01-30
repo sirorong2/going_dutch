@@ -13,7 +13,6 @@ class DutchList extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _DutchItemCard(
-
             ),
             if (index == itemMaxCount - 1) Text('합계'),
             if (index == itemMaxCount - 1)
@@ -31,17 +30,16 @@ class DutchList extends StatelessWidget {
 
 class _DutchItemCard extends StatefulWidget {
 
-
-  const _DutchItemCard({Key? key,}) : super(key: key);
+  _DutchItemCard({Key? key,}) : super(key: key);
 
   @override
   State<_DutchItemCard> createState() => _DutchItemCardState();
 }
 
 class _DutchItemCardState extends State<_DutchItemCard> {
+  int attendance=2;
   @override
   Widget build(BuildContext context) {
-
     return Card(
       elevation: 4.0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
@@ -50,7 +48,21 @@ class _DutchItemCardState extends State<_DutchItemCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('금액'),
+            TextField(
+
+              textAlign: TextAlign.end,
+              keyboardType: TextInputType.number,
+              style: TextStyle(fontSize: 20.0),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                isCollapsed: true,
+                label: Text(
+                  '금액',
+                  style: TextStyle(fontSize: 20.0),
+                ),
+                suffixText: '원',
+              ),
+            ),
             Divider(
               thickness: 1,
               color: Colors.grey,
@@ -68,7 +80,7 @@ class _DutchItemCardState extends State<_DutchItemCard> {
                       ),
                     ),
                     SizedBox(width: 8.0,),
-                    Text('1',style: TextStyle(fontSize: 20.0),),
+                    Text('$attendance',style: TextStyle(fontSize: 20.0),),
                   ],
                 ),
                 Container(
@@ -76,7 +88,9 @@ class _DutchItemCardState extends State<_DutchItemCard> {
                     children: [
                       GestureDetector(
                         onTap: (){
-
+                          setState(() {
+                            attendance++;
+                          });
                         },
                         child: Container(
                           child: Image.asset(
@@ -89,10 +103,21 @@ class _DutchItemCardState extends State<_DutchItemCard> {
                       SizedBox(
                         width: 8.0,
                       ),
-                      Image.asset(
-                        "assets/icons/minus.png",
-                        width: 20.0,
-                        height: 20.0,
+                      GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            if(attendance>2){
+                              attendance--;
+                            }
+                          });
+                        },
+                        child: Container(
+                          child: Image.asset(
+                            "assets/icons/minus.png",
+                            width: 20.0,
+                            height: 20.0,
+                          ),
+                        ),
                       ),
                       SizedBox(
                         width: 8.0,
