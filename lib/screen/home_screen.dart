@@ -17,17 +17,17 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.menu),
-        title: Text('Going Dtuch'),
-        actions: [
+        title: Text('Going Dtuch ${_selectedIndex}'),
+        actions: const [
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(10.0),
             child: Icon(Icons.settings),
           ),
         ],
       ),
 
       body: Center(
-        child: Dutch_page(),
+        child: DutchPage(),
       ),
       //floatingActionButton: FloatingActionButton(onPressed: (){},child: Icon(Icons.add,)),
       
@@ -51,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         currentIndex: _selectedIndex,
         onTap: _bottomNavigationBarTapped,
+
       ),
     );
   }
@@ -60,9 +61,9 @@ class _HomeScreenState extends State<HomeScreen> {
       _selectedIndex = index;
     });
   }
-  
+
   List _SelectedPage = [
-    Dutch_page(),
+    DutchPage(),
     ListPage(),
   ];
 }

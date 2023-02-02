@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:kpostal/kpostal.dart';
 
-class DutchList extends StatelessWidget {
-  int attendance=2;
+class DutchList extends StatefulWidget {
+
   DutchList({Key? key}) : super(key: key);
 
   @override
+  State<DutchList> createState() => _DutchListState();
+}
+
+class _DutchListState extends State<DutchList> {
+  int attendance=2;
+
+  int itemMaxCount=1;
+
+  @override
   Widget build(BuildContext context) {
-    int itemMaxCount = 3;
     return ListView.builder(
       itemBuilder: (context, index) {
         return Column(
@@ -14,11 +23,35 @@ class DutchList extends StatelessWidget {
           children: [
             _DutchItemCard(
             ),
-            if (index == itemMaxCount - 1) Text('합계'),
+            SizedBox(height: 8.0,),
             if (index == itemMaxCount - 1)
-              ElevatedButton(
-                onPressed: () {},
-                child: Text('항목추가'),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(height: 16.0,),
+                  Container(
+                    decoration: BoxDecoration(border: Border.all(color: Colors.grey),borderRadius: BorderRadius.circular(8.0)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('합계',style: TextStyle(fontSize: 20.0),),
+                          Text('000원',style: TextStyle(fontSize: 20.0),),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 8.0,),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        itemMaxCount++;
+                      });
+                    },
+                    child: Text('항목추가'),
+                  ),
+                ],
               ),
           ],
         );
@@ -30,7 +63,7 @@ class DutchList extends StatelessWidget {
 
 class _DutchItemCard extends StatefulWidget {
 
-  _DutchItemCard({Key? key,}) : super(key: key);
+  const _DutchItemCard({Key? key,}) : super(key: key);
 
   @override
   State<_DutchItemCard> createState() => _DutchItemCardState();
@@ -38,6 +71,10 @@ class _DutchItemCard extends StatefulWidget {
 
 class _DutchItemCardState extends State<_DutchItemCard> {
   int attendance=2;
+
+  String postCode = '-';
+  String address = '-';
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -132,12 +169,27 @@ class _DutchItemCardState extends State<_DutchItemCard> {
               color: Colors.grey,
             ),
             TextField(
+              onTap: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => KpostalView(
+                      callback: (Kpostal result) {
+                        setState(() {
+                          this.postCode = result.postCode;
+                          this.address = result.address;
+                        });
+                      },
+                    ),
+                  ),
+                );
+              },
               style: TextStyle(fontSize: 20.0),
               decoration: InputDecoration(
                 border: InputBorder.none,
                 isCollapsed: true,
                 label: Text(
-                  '장소',
+                  this.postCode == '-' || this.address == '-' ? '장소' : this.address,
                   style: TextStyle(fontSize: 20.0),
                 ),
               ),
