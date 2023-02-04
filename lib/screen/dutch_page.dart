@@ -10,15 +10,13 @@ class DutchPage extends StatefulWidget {
 }
 
 class _DutchPageState extends State<DutchPage> {
+  String? year;
+  String? month;
+  String? day;
+  String selectedDay = '';
+
   @override
   Widget build(BuildContext context) {
-    DateTime selectedDate = DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day,
-    );
-
-    String? datePickerDate;
     final DateTime now = DateTime.now();
 
     return Padding(
@@ -27,58 +25,24 @@ class _DutchPageState extends State<DutchPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(
-            height: 16.0,
+            height: 8.0,
           ),
           Row(
+
             children: [
-              GestureDetector(
-                onTap: () {
-                  showCupertinoDialog(
-                    context: context,
-                    barrierDismissible: true,
-                    builder: (BuildContext context) {
-                      return Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          color: Colors.white,
-                          height: 200.0,
-                          child: CupertinoDatePicker(
-                            mode: CupertinoDatePickerMode.date,
-                            initialDateTime: selectedDate,
-                            onDateTimeChanged: (DateTime date) async {
-                              setState(() {
-                                print('datePickerDate = $datePickerDate');
-                                selectedDate = date;
-                                print('selectedDate = $selectedDate');
-                                datePickerDate =
-                                    '${selectedDate.year} ${selectedDate.month} ${selectedDate.day}';
-                                print('datePickerDate = $datePickerDate');
-                              });
-                            },
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                },
-                child: Row(
-                  children: [
-                    Container(
-                      child: Image.asset(
-                        'assets/icons/calendar.png',
-                        width: 25.0,
-                        height: 25.0,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 8.0,
-                    ),
-                    datePickerDate == null
-                        ? Text('날짜선택 Click')
-                        : Text(datePickerDate),
-                  ],
-                ),
+              IconButton(
+                onPressed: onCalendarPressed,
+                icon: Image.asset('assets/icons/calendar.png',width: 25.0,height: 25.0,),
               ),
+              SizedBox(
+                width: 8.0,
+              ),
+              selectedDay == ''
+                  ? Text('날짜선택 Click',style: TextStyle(fontSize: 18.0),)
+                  : Text(
+                      selectedDay!,
+                      style: TextStyle(fontSize: 20.0),
+                    ),
             ],
           ),
           SizedBox(
@@ -95,4 +59,32 @@ class _DutchPageState extends State<DutchPage> {
       ),
     );
   }
+
+  onCalendarPressed() {
+    showCupertinoDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (BuildContext context) {
+          return Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              color: Colors.white,
+              height: 300.0,
+              child: CupertinoDatePicker(
+                mode: CupertinoDatePickerMode.date,
+                onDateTimeChanged: (DateTime value) {
+                  setState(() {
+                    year = value.year.toString();
+                    month = value.month.toString();
+                    day = value.day.toString();
+                    selectedDay = '${year}. ${month}. ${day}.';
+                    print(selectedDay);
+                  });
+                },
+              ),
+            ),
+          );
+        });
+  }
+
 }
