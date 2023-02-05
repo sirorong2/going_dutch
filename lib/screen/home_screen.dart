@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:going_dutch/component/home_appBar.dart';
 import 'package:going_dutch/screen/dutch_page.dart';
 import 'package:going_dutch/screen/list_page.dart';
+import 'package:going_dutch/component/home_appBar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.menu),
-        title: Text('Going Dtuch ${_selectedIndex}'),
+        title: Text('Going Dtuch'),
         actions: const [
           Padding(
             padding: EdgeInsets.all(10.0),
@@ -58,7 +60,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _bottomNavigationBarTapped(int index){
     setState(() {
+      print(index);
       _selectedIndex = index;
+      print(_selectedIndex);
     });
   }
 
